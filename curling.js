@@ -1,17 +1,16 @@
 jQuery(window).on('load', function() {
 	var $ = jQuery;
 
-
 	class vector {
 		constructor(xVal, yVal) {
 			this.x = xVal;
 			this.y = yVal;
 		}
 		get x() {
-			return this.x;
+			return this._x;
 		}
 		get y() {
-			return this.y;
+			return this._y;
 		}
 		set x(xVal) {
 			this._x = xVal;
@@ -24,13 +23,26 @@ jQuery(window).on('load', function() {
 
 	class CurlingBall {
 		get position() {
-			return this.position;
+			return this._position;
 		}
 		set position(input) {
 			this._position = input;
 		}
+		get clicked() {
+			return this._clicked;
+		}
+		set clicked(input) {
+			this._clicked = input;
+		}
+		get ball() {
+			return this._ball[0];
+		}
+		set ball(input) {
+			this._ball = input;
+		}
 		constructor($el) {
 			this.ball = $el;
+			this.clicked = false;
 			//this.id = intval(new Date());
 			this.position = new vector(0, 0);
 		}
@@ -49,49 +61,32 @@ jQuery(window).on('load', function() {
 	// 	return vector;
 	// }
 
-	var ball;
-	var ballX = 100;
-	var ballY = 100;
-	var ballClicked = false;
+	//var ball;
+	// var ballX = 100;
+	// var ballY = 100;
+	// var ballClicked = false;
 
-	window.on('load', function() {
+	//$(window).load(function() {
+	//console.log(ball1.ball[0]);
+	ball1.ball.addEventListener('mousedown',
+		onBallMouseDown, false);
+	ball1.ball.addEventListener('mouseup',
+		onBallMouseUp, false);
+	ball1.ball.addEventListener('touchstart',
+		onBallMouseDown, false);
+	ball1.ball.addEventListener('touchend',
+		onBallMouseUp, false);
+	//document.body.appendChild(ball1.ball);
 
-		ball1.addEventListener('mousedown', function(e) {
-			onBallMouseDown(e);
-		}, false);
-		ball1.addEventListener('mouseup', function(e) {
-			onBallMouseUp(e);
-		}, false);
-		ball1.addEventListener('touchstart', function(e) {
-			onBallMouseDown(e);
-		}, false);
-		ball1.addEventListener('touchend', function(e) {
-			onBallMouseUp(e);
-		}, false);
-		document.body.appendChild(ball1);
 
-		ball2.addEventListener('mousedown', function(e) {
-			onBallMouseDown(e);
-		}, false);
-		ball2.addEventListener('mouseup', function(e) {
-			onBallMouseUp(e);
-		}, false);
-		ball2.addEventListener('touchstart', function(e) {
-			onBallMouseDown(e);
-		}, false);
-		ball2.addEventListener('touchend', function(e) {
-			(e);
-		}, false);
-		document.body.appendChild(ball2);
+	// document.addEventListener('mousemove', function(e) {
+	// 	onMouseMove(e);
+	// }, false);
+	// document.addEventListener('touchmove', function(e) {
+	// 	onTouchMove(e);
+	// }, false);
 
-		document.addEventListener('mousemove', function(e) {
-			onMouseMove(e);
-		}, false);
-		document.addEventListener('touchmove', function(e) {
-			onTouchMove(e);
-		}, false);
-
-	});
+	//});
 
 	function onMouseMove(e) {
 
@@ -116,22 +111,23 @@ jQuery(window).on('load', function() {
 	};
 
 	function onBallMouseDown(e) {
-
-		ballClicked = true;
+		console.log("ball clicked " + e);
+		this.clicked = true;
+		console.log(this);
 
 	};
 
 	function onBallMouseUp(e) {
-
-		ballClicked = false;
+		console.log("ball un clicked " + this);
+		this.clicked = false;
 
 		//When the ball is released, it will be thrown at an angle relative to it's original position when it is thrown..  
 		//For testing purposes, let's throw a the ball at 90 degrees with a speed of 60 pixels per second.
-		throwBall(60, 50);
+		//throwBall(60, 50, this);
 
 	};
 
-	function throwBall(angle, speed) {
+	function throwBall(angle, speed, el) {
 
 		var animationComplete = false;
 
@@ -147,11 +143,18 @@ jQuery(window).on('load', function() {
 
 			//How do I Calculate the new X and Y position for the ball during each frame, based on the angle and speed which it was thrown?
 
-			ballX = ballX + vx;
-			ballY = ballY - vy;
+			//ballX = ballX + vx;
+			//ballY = ballY - vy;
 
-			ball.style.left = ballX + "px";
-			ball.style.top = ballY + "px";
+
+			// ball.style.left = ballX + "px";
+			// ball.style.top = ballY + "px";
+
+			el.position.x(el.position.x + vx);
+			el.position.y(el.position.y + vy);
+
+			el.ball.style.left = el.position.x + "px";
+			el.ball.style.top = el.position.x + "px";
 
 			if (animationComplete == true) {
 				clearInterval(interval);
