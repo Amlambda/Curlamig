@@ -13,18 +13,21 @@ jQuery(window).on('load', function() {
 		get y() {
 			return this.y;
 		}
-		// set x(xVal) {
-		// 	this.x = x;
-		// }
-		// set y(yVal) {
-		// 	this.y = y;
-		// }
+		set x(xVal) {
+			this._x = xVal;
+		}
+		set y(yVal) {
+			this._y = yVal;
+		}
 
 	};
 
 	class CurlingBall {
 		get position() {
 			return this.position;
+		}
+		set position(input) {
+			this._position = input;
 		}
 		constructor($el) {
 			this.ball = $el;
