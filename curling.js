@@ -52,7 +52,10 @@ jQuery(window).on('load', function() {
 	//var ball1 = new CurlingBall($('.ball1'));
 	var ball2 = $('.ball2');
 	var ball1 = $('.ball1');
+
 	ballList.push(new CurlingBall($('.ball1')));
+	ballList[0].position.x = 100;
+	ballList[0].position.y = 100;
 	ballList.push(new CurlingBall($('.ball2')));
 	console.log(ball1);
 
@@ -123,6 +126,7 @@ jQuery(window).on('load', function() {
 	function onBallMouseDown(e) {
 		ballList[ind].clicked = true;
 		startPosX = ballList[ind].position.x;
+		console.log("mousedown x " + startPosX);
 		startPosY = ballList[ind].position.y;
 		startTime = performance.now();
 
@@ -135,9 +139,10 @@ jQuery(window).on('load', function() {
 		var dist = Math.sqrt((ballList[ind].position.x - startPosX) * (ballList[ind].position.x - startPosX) +
 			(ballList[ind].position.y - startPosY) * (ballList[ind].position.y - startPosY));
 		var vel = dist * 500 / ((stopTime - startTime));
-
-		var ang = Math.atan2((ballList[ind].position.x - startPosX - midX), (ballList[ind].position.y - startPosY - midY)) * 180 / Math.PI;
-
+		console.log("mouseup x " + ballList[ind].position.x);
+		var ang = Math.atan2((ballList[ind].position.x - startPosX), (ballList[ind].position.y - startPosY)) * 180 / Math.PI;
+		console.log("xdist " + (ballList[ind].position.x - midX - startPosX));
+		console.log("ydist " + (ballList[ind].position.y - midY - startPosY));
 		console.log(ang);
 		//When the ball is released, it will be thrown at an angle relative to it's original position when it is thrown..  
 		//For testing purposes, let's throw a the ball at 90 degrees with a speed of 60 pixels per second.
