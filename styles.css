@@ -1,3 +1,12 @@
+body{
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+}
+
+
+
 .ball1{
 	height: 100px;
 	width: 100px;
@@ -6,4 +15,28 @@
 }
 .field{
 	height: 100vh;
+}
+
+.whole-col{
+	display: inline-block;
+	height: 100%;
+}
+
+.left-col,.right-col{
+
+	min-width: 20%;
+	background-color: pink;
+}
+
+.left-col{
+	float: left;
+}
+
+
+.right-col{
+	float: right;
+}
+
+.mid-col{
+	width: calc(100vh/9);
 }
