@@ -1,0 +1,9 @@
+.ball1{
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	background-color: blue;
+}
+.field{
+	height: 100vh;
+}
